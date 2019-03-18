@@ -29,7 +29,7 @@ Testing R Markdown
 	<meta name="author" content="Heidi" />
 	<meta name="description" content="I’m testing to see whether syntax highlighting is working. This is just random code from the internet.
 library(scatterpie) library(totalcensus) library(dplyr)metro &amp;lt;- read_acs1year( year = 2016, states = &amp;quot;US&amp;quot;, table_contents = c( &amp;quot;white = C02003_003&amp;quot;, &amp;quot;black = C02003_004&amp;quot;, &amp;quot;asian = C02003_006&amp;quot; ), geo_headers = &amp;quot;CBSA&amp;quot;, summary_level = &amp;quot;310&amp;quot; ) %&amp;gt;% mutate(others = population - white - black - asian) us &amp;lt;- map_data(&amp;#39;state&amp;#39;) ggplot(us, aes(long, lat)) &#43; geom_map(map=us, aes(map_id=region), fill=&amp;quot;grey97&amp;quot;, color=&amp;quot;grey&amp;quot;) &#43; geom_scatterpie(data = largest, aes(lon, lat, r = sqrt(total)/2000), cols = c(&amp;quot;white&amp;quot;, &amp;quot;black&amp;quot;, &amp;quot;asian&amp;quot;, &amp;quot;others&amp;quot;), alpha = 0." />
-<meta name="generator" content="Hugo 0.47.1" />
+<meta name="generator" content="Hugo 0.54.0" />
 
 <link rel="shortcut icon" href="/img/favicon.gif">
 
@@ -359,7 +359,10 @@ var bodyBgSwitchIndex = 0;var gradients = [
 			<hr>
 			
 			<article class="post-content twemoji">
-				<p>I’m testing to see whether syntax highlighting is working. This is just random code from the internet.</p>
+				
+
+
+<p>I’m testing to see whether syntax highlighting is working. This is just random code from the internet.</p>
 <pre class="r"><code>library(scatterpie)
 library(totalcensus)
 library(dplyr)metro &lt;- read_acs1year(
