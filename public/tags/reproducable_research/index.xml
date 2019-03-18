@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reproducable_research on Panda Poop</title>
+    <link>/tags/reproducable_research/</link>
+    <description>Recent content in Reproducable_research on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/reproducable_research/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reproducible Research</title>
+      <link>/post/reproducible-research/</link>
+      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-research/</guid>
+      <description>I’ve been gradually changing my workflows to be more in line with the prinicples of reproducible research. It has been life-changing – I can go back and run analyses from last year on a different computer and…it just works. It’s absolutely magical.
+I’m not fully reproducible yet - I shudder to think what someone would do if they came along my Projects folder at this exact moment, but I’m getting closer.</description>
+    </item>
+    
+  </channel>
+</rss>

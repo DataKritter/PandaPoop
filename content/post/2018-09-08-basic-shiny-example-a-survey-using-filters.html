@@ -1,0 +1,66 @@
+---
+title: 'Basic Shiny Example: A survey using filters'
+author: Heidi
+date: '2018-09-08'
+slug: basic-shiny-example-a-survey-using-filters
+description: Live coding a basic Shiny app that filters a dataset
+categories:
+  - R
+tags:
+  - Shiny
+---
+
+
+
+<p>Today at our R-Ladies meeting, a new R user wanted to know if R could be a platform to help people pick an insurance strategy based on some basic demographic data.<br />
+We weren’t sure either, so we tried to see if we could make a simple working example of the sort of thing she envisioned.</p>
+<p>This is what we developed. You can download the dummy data <a href="HealthStrategy.xlsx">here</a> and see the app in action <a href="https://zoonut.shinyapps.io/RLadies_ShinyMinimumExample/">here</a>. <a href="https://zoonut.shinyapps.io/RLadies_ShinyMinimumExample/"><img src="/post/2018-09-08-basic-shiny-example-a-survey-using-filters_files/shinyscreen.gif" alt="screenshot" /></a></p>
+<pre class="r"><code>library(shiny)
+library(readxl)
+library(dplyr)
+insurance &lt;- read_xlsx(&quot;HealthStrategy.xlsx&quot;)
+
+# Define UI for application that draws a histogram
+ui &lt;- fluidPage(
+
+   # Application title
+   titlePanel(&quot;Insurance Strategy Picker&quot;),
+
+   # Sidebar with a slider input for number of bins
+   sidebarLayout(
+      sidebarPanel(
+            radioButtons(&quot;age&quot;, label = h3(&quot;Age&quot;),
+                         choices = list(&quot;&lt;70&quot; = 1, &quot;&gt;70&quot; = 2),
+                         selected = 1),
+
+            radioButtons(&quot;gender&quot;, label = h3(&quot;Gender&quot;),
+                         choices = list(&quot;Male&quot; = 1, &quot;Female&quot; = 2, &quot;Other&quot; = 3),
+                         selected = 1),
+
+            radioButtons(&quot;diabetes&quot;, label = h3(&quot;Diabetes&quot;),
+                         choices = list(&quot;Yes&quot; = 1, &quot;No&quot; = 2),
+                         selected = 1)
+
+      ),
+
+      # Show a plot of the generated distribution
+      mainPanel(
+         tableOutput(&quot;distPlot&quot;)
+      )
+   )
+)
+
+# Define server logic required to draw a histogram
+server &lt;- function(input, output) {
+
+   output$distPlot &lt;- renderTable({
+
+         insurance %&gt;%
+               filter(Age == input$age, Gender == input$gender, Diabetes == input$diabetes) %&gt;%
+               select(Strategy)
+
+   })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)</code></pre>

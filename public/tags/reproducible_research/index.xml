@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reproducible_research on Panda Poop</title>
+    <link>/tags/reproducible_research/</link>
+    <description>Recent content in Reproducible_research on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 16 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/reproducible_research/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Moving to the Cloud: Installing RStudio Server on Digital Ocean</title>
+      <link>/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/</link>
+      <pubDate>Sat, 16 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/</guid>
+      <description>I’m moving my workflow to the cloud! It’s faster, I don’t need to buy a fancy new computer to crunch big data sets, it’s the wave of the future, etc.
+Here are my goals:
+Set up RStudio Server in the Cloud Set it up with all my favorite packages (i.e., the tidyverse), themes, layouts, etc. Save that configuration as a template to use for future new projects  You’ll need a web browser and a terminal app (command line app) on your local computer.</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Research</title>
+      <link>/post/reproducible-research/</link>
+      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-research/</guid>
+      <description>I’ve been gradually changing my workflows to be more in line with the prinicples of reproducible research. It has been life-changing – I can go back and run analyses from last year on a different computer and…it just works. It’s absolutely magical.
+I’m not fully reproducible yet - I shudder to think what someone would do if they came along my Projects folder at this exact moment, but I’m getting closer.</description>
+    </item>
+    
+  </channel>
+</rss>

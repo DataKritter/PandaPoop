@@ -1,0 +1,50 @@
+---
+title: "Playing with gganimate"
+author: "Heidi"
+date: '2018-09-03'
+description: Prepping some examples for RLadies
+slug: playing-with-gganimate
+tags:
+  - gganimate
+categories:
+  - R
+---
+
+
+
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>To get started, load the <code>tidyverse</code> (or just <code>ggplot2</code>) and <code>gganimate</code>.</p>
+<p>You can’t install <code>gganimate</code> from cran yet, so for now, you’ll need:</p>
+<p><code># install.packages('devtools') devtools::install_github('thomasp85/gganimate')</code></p>
+<pre class="r"><code>library(tidyverse)
+library(gganimate)</code></pre>
+</div>
+<div id="basics-of-gganimate" class="section level2">
+<h2>Basics of gganimate</h2>
+<p>Here’s an canned example using the <code>mtcars</code> dataset.</p>
+<p>This uses <em>states</em> (i.e. categorical variables) for the transition.</p>
+<pre class="r"><code>library(ggplot2)
+library(gganimate)
+
+ggplot(mtcars, aes(factor(cyl), mpg, color = as.factor(cyl))) + 
+  geom_boxplot() + 
+  # Here comes the gganimate code
+  transition_states(
+    gear,
+    transition_length = 2,
+    state_length = 1
+  ) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes(&#39;sine-in-out&#39;)</code></pre>
+<p><img src="/post/2018-09-03-playing-with-gganimate_files/figure-html/unnamed-chunk-2-1.gif" /><!-- --></p>
+<p>Here’s another example looking at toothgrowth in guinea pigs fed either orange juice (OJ) or vitamin C supplement (VC) at increasing doses. This uses <em>time</em> instead of states for the transition.</p>
+<pre class="r"><code>ggplot(ToothGrowth, aes(x = supp, y = len, color = supp)) + 
+      geom_boxplot() +
+      labs(title = &#39;Dose: {closest_state} mg&#39;, x = &#39;Supplement&#39;, y = &#39;Tooth Length&#39;) +
+      transition_states(dose, transition_length = 1, state_length = 1) +
+      # ease_aes(&#39;linear&#39;) +
+      theme(text = element_text(size=18, face=&#39;bold&#39;)) </code></pre>
+<p><img src="/post/2018-09-03-playing-with-gganimate_files/figure-html/ToothGrowth-1.gif" /><!-- --></p>
+</div>

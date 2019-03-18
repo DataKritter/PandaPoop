@@ -1,0 +1,38 @@
+<article class="blog-card none flexbox" style="background-image: url({{ if .Params.cover }}{{ .Params.cover }}{{ else }}/img/default{{ index (shuffle (seq 1 14)) 0 }}.jpg{{ end }})">
+<img class="image" src="{{ if .Params.cover }}{{ .Params.cover }}{{ else }}/img/default{{ index (shuffle (seq 1 14)) 0 }}.jpg{{ end }}"></img>
+<div class="title-content twemoji">
+	<h3><a class="title" href={{ .Permalink }}>{{ .Title }}</a></h3>
+	<div class="intro twemoji">{{ if isset .Params "description" }}{{ .Params.description | emojify  | markdownify }}{{ else }}<br><br>{{ end }}</div>
+</div>
+<div class="utility-info">
+	<ul class="utility-list">
+
+<!--
+		{{ if .Site.DisqusShortname }}
+		<div><i class="comment icon"></i><span class="disqus-comment-count" data-disqus-identifier="{{ .UniqueID }}"></span></div>
+		{{ end }}
+-->
+
+
+		<div><span>{{ .Date.Format "2 Jan 2006" }}</span></div>
+		<div><span><i class="clock icon"></i>{{ .ReadingTime }} min read</span></div>
+
+
+
+<div><span> {{ if .Params.tags }}<i class="tags icon"></i>
+{{ range $index, $dtags := .Params.tags }}
+      {{ if gt $index 0 }}, &nbsp; {{ end }}
+      <a id="link1" href="{{ "tags/" | relURL }}{{ . | urlize }}"> {{ . }} </a>
+      {{ end }} {{ end }}
+</span></div>
+
+<div><span> {{ if .Params.categories }}<i class="folder icon"></i>
+      {{ if gt (len .Params.categories) 1 }}{{ end }}
+  {{ range $index, $dcategories := .Params.categories }}{{ if gt $index 0 }},&nbsp;{{ end }} <a id="link1" href="{{ "categories/" | relURL }}{{ . | urlize }}">{{ . }}</a>{{ end }} {{ end }}
+</span></div>
+
+
+	</ul>
+</div>
+<div class="color-overlay"></div>
+</article>

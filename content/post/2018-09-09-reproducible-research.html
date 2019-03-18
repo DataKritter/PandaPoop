@@ -1,0 +1,119 @@
+---
+title: "Reproducible Research"
+author: "Heidi"
+date: '2018-09-09'
+slug: reproducible-research
+categories:
+  - R
+tags: [Tidy_data, Reproducible_research]
+description: Improving my workflow
+---
+
+
+
+<p>I’ve been gradually changing my workflows to be more in line with the prinicples of reproducible research. It has been life-changing – I can go back and run analyses from last year on a different computer and…it just works. It’s absolutely magical.</p>
+<p>I’m not fully reproducible yet - I shudder to think what someone would do if they came along my Projects folder at this exact moment, but I’m getting closer. Here are the main reasons I’m going this route and the tools I’m using to do so.</p>
+<p>There are lots of resources for reproducible research, but they are mostly overkill for my level. So, here’s what I’ve taken from the discussion.</p>
+<div id="what-is-reproducible-research" class="section level1">
+<h1>What is reproducible research?</h1>
+<blockquote>
+<p>A reproducible workflow is one in which each step of the analytical process is clearly documented in such a way that someone — <em>and here it is better to imagine that person is not you</em> — can retrace your steps and verify the exact results that you presented. <em>–Baumer BS. (2017) <a href="https://doi.org/10.7287/peerj.preprints.3160v2">Lessons from between the white lines for isolated data scientists</a>. PeerJ Preprints 5:e3160v2</em></p>
+</blockquote>
+</div>
+<div id="why-do-reproducible-research" class="section level1">
+<h1>Why do reproducible research?</h1>
+<ul>
+<li>If I can retrace my steps, I can be more confident in my results.</li>
+<li>If other people can follow my steps, they will trust my results more.</li>
+<li>If other people can follow my steps, they can help me when I have problems.</li>
+<li>If other people can follow my steps, they can learn from me.</li>
+<li>If I can follow other people’s steps, I can learn from them.</li>
+<li>I want to be kind to “my future self”. I might get asked to rerun an old analysis or to pass on my projects to someone else. It would be so much easier if that was relatively simple to do and didn’t require my computer to have a particular file structure or software to do so.</li>
+</ul>
+</div>
+<div id="my-key-principles-of-rr" class="section level1">
+<h1>My key principles of RR:</h1>
+<ol style="list-style-type: decimal">
+<li><h2 id="raw-data-is-inviolable">Raw data is inviolable</h2>
+<ul>
+<li><strong>Physically isolate raw data</strong> (different folder, server, etc.)</li>
+<li><strong>Absolutely no raw data manipulation in Excel.</strong> It is (nearly) impossible to retrace point-and-click steps from Excel.<br> - <strong>No formulas.</strong> Ever.<br />
+- <strong>No sorting.</strong> Ever.</li>
+<li><strong>Use automated methods</strong> to get data wherever possible (SQL, web scraping, <code>read_xlsx()</code>, etc.)</li>
+</ul></li>
+<li><h2 id="always-work-from-a-blank-slate">Always work from a blank slate</h2>
+It’s easy to generate a bunch of variables and dataframes along the way. You might create a graph that refers to an earlier version of a dataset (which is still in memory), but upon running the script, that dataset is nowhere to be found. You are being haunted by the <em>Ghost of Data Past</em>. To exorcise these ghosts forever, do the following:
+<ul>
+<li>“Restart R and Run All Chunks” (Session Menu or inline Run menu)) often. Your script should work from beginning to end in a fresh instance of R.</li>
+<li>Change your RStudio settings - Do NOT restore .RData into workspace at startup - Never save workspace to .RData on exit {{% tweet "1032639710714363904" %}}</li>
+</ul></li>
+<li><h2 id="organize-using-projects">Organize Using Projects</h2>
+In R, Projects are a folder in which you can keep all of your files related to a given analysis. My projects don’t usually contain very many files so I keep everything at the root level. Many data scientists, though, make separate sub-folders inside their project folder for data, image, scripts, etc..</li>
+</ol>
+<p>The primary feature of projects for me is that they allow me to have several data projects going at once in separate instances of R.</p>
+<p>The other key feature is that if all of your files are in the same directory, you can use local references instead of full paths.</p>
+<p>Using full paths is a mess, and if I ever move my folder, everything breaks.</p>
+<pre class="r"><code>library(readxl)
+mydata &lt;- read_xlsx(&quot;C:/HD/MyFiles/MyProjects/BigDataProject/myfile.xlsx&quot;).</code></pre>
+<p>In a project, though, I can just use short filenames and they will continue to work indenfinitely - RStudio just finds them.</p>
+<pre class="r"><code>library(readxl)
+mydata &lt;- read_xlsx(&quot;myfile.xlsx&quot;)</code></pre>
+<p>In my workflow, those are the “laws”. However, there are a few more things that I think improve my coding style, making my analyses more reproducible by myself and hopefully others.</p>
+</div>
+<div id="key-style-and-workflow-choices" class="section level1">
+<h1>Key Style and Workflow Choices</h1>
+<ol style="list-style-type: decimal">
+<li><h2 id="use-meaningful-names-consistently">Use meaningful names consistently</h2></li>
+</ol>
+<ul>
+<li><em>Filenames</em> should be: (per <a href="http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf">Jenny Bryan</a>)
+<ul>
+<li><strong>Machine readable</strong> <em>2018-12-09_bird-growth_tidy.rmd</em> - This way I can search by date (2018), by project (bird-growth) or by document type (tidy.rmd)</li>
+<li><strong>Human readable</strong> - project names and file types are clear.</li>
+<li><strong>Plays well with default ordering</strong> - dates with year first sort properly. You can also do this with suffixes tidy1.rmd, tidy2.rmd (for sequential scripts - not versions of the same thing!)</li>
+<li><strong>Punctuate</strong> - Use hyphens between words within a chunk, and underscores between chunks</li>
+<li><strong>No spaces</strong></li>
+<li><strong>Names</strong> - I’m not great at this, but I’d like to be consistently use “tidy.rmd, explore.rmd, analysis.rmd, report.rmd” as filenames (or, if small enough, all in one file)</li>
+</ul></li>
+<li><em>Variable</em> names should be:
+<ul>
+<li><strong>Short, but meaningful</strong> (fishgrowth vs. myvar or mydf)</li>
+<li>I can’t ever seem to be consistent on using CamelCase vs. snake_case, but in theory you should pick one and stick with it.</li>
+<li><strong>No spaces</strong></li>
+</ul></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><h2 id="tidy-the-data-with-a-script">Tidy the data with a script</h2>
+Hadley Wickham coined the term “Tidy Data” to describe data with the following features:
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table. <a href="http://dx.doi.org/10.18637/jss.v059.i10">Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1 - 23. doi:</a></li>
+</ol></li>
+</ol>
+<p>Tidy data is easy to work with, easy to analyze, easy to understand. To get from messy data to tidy data (usually) requires a lot of steps. Scripting those steps ensures that I can do my “data munging” steps again if the raw data gets updated with new values. Depending on length, I either do these as a standalone code block in an R Notebook, or as a standalone file called tidy.rmd.</p>
+<p>To tidy data, the tools in <code>dplyr</code> and <code>tidyr</code> are invaluable. I wrote a <a href="tidying-data-in-the-tidyverse.html">post</a> about tidying data.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><h2 id="use-the-pipe">Use the pipe!</h2>
+The pipe may be the most life-changing aspect I’ve learned here. The pipe makes code so much more readable that it really helps when I go back and want to know what a script did.</li>
+</ol>
+<p>Here’s an example without the pipe. I had to create 2 extra dummy variables and it isn’t very readable.</p>
+<pre class="r"><code>library(dplyr)
+just4cyl &lt;- filter(mtcars, cyl == 4)
+four_cyl_with_ratio &lt;- mutate(just4cyl, gcratio = gear/carb)
+clean_cyl_with_ratio &lt;- select(four_cyl_with_ratio, hp, wt, gcratio)</code></pre>
+<p>And an example using the pipe. So much better, no? The verbs are lined up and it is clear what I did.</p>
+<pre class="r"><code>library(dplyr)
+clean_cyl_with_ratio &lt;- mtcars %&gt;%
+      filter(cyl == 4) %&gt;%
+      mutate(gcratio = gear/carb) %&gt;%
+      select(hp, wt, gcratio)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><h2 id="comment-liberally">Comment liberally</h2>
+<p>Especially with R Notebooks, adding descriptive info about your thought process is a breeze. Explain to your future self what you were trying to do and what cludgy workarounds you might have employed along the way.</p></li>
+<li><h2 id="save-common-tasks-as-functionsscripts">Save common tasks as functions/scripts</h2>
+<p>If you find yourself doing the same thing over and over, write a function or save the code as a script. Hadley’s rule of thumb is anything you do more than twice, but for me the pain of copying and pasting vs. writing a function makes the cutoff for me anything I do more than 10x.</p></li>
+<li><h2 id="use-version-control">Use version control</h2>
+<p>I only know git/github, which is baked into RStudio. Having regular backups and history of my decisions is a lifesaver. Learning it has been a curve, and I’m sure I don’t really understand it. My basic trend is to commit a change at the end of every “complete thought”, whether that is an r code block that produces the output I like, some text that forms a complete thought, etc. I try to only commit when everything is working fine, so I can use it as a restore point.</p></li>
+</ol>
+</div>

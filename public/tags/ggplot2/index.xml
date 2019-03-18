@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ggplot2 on Panda Poop</title>
+    <link>/tags/ggplot2/</link>
+    <description>Recent content in Ggplot2 on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 15 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mapping bee colonies in Florida with ggplot2</title>
+      <link>/post/mapping-bee-colonies-in-florida-with-ggplot2/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mapping-bee-colonies-in-florida-with-ggplot2/</guid>
+      <description>This is data from the USDA about the number of colonies of bees around the country.
+First import the data. I got the data from the data.world site.
+Tidy the Data I had to do a bit of tidying:
+ remove the commas in numbers (i.e., 21,892 needed to be 21892 to be treated as numeric) remove the period after St. in St. Johns and St. Lucie in order to match the map dataset  I feel the expand/grid bit is a little clunky, but I couldn’t figure out how to do it in one pipe.</description>
+    </item>
+    
+  </channel>
+</rss>

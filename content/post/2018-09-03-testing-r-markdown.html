@@ -1,0 +1,66 @@
+---
+title: "Testing R Markdown"
+author: "Heidi"
+date: '2018-09-03'
+slug: testing-r-markdown
+tags: ["Test"]
+categories: ["R"]
+---
+
+
+
+<p>I’m testing to see whether syntax highlighting is working. This is just random code from the internet.</p>
+<pre class="r"><code>library(scatterpie)
+library(totalcensus)
+library(dplyr)metro &lt;- read_acs1year(
+    year = 2016,
+    states = &quot;US&quot;,
+    table_contents = c(
+        &quot;white = C02003_003&quot;, 
+        &quot;black = C02003_004&quot;, 
+        &quot;asian = C02003_006&quot;
+    ),
+    geo_headers = &quot;CBSA&quot;,
+    summary_level = &quot;310&quot;
+) %&gt;%
+    mutate(others = population - white - black - asian)
+
+us &lt;- map_data(&#39;state&#39;)
+ggplot(us, aes(long, lat)) +
+    geom_map(map=us, aes(map_id=region), fill=&quot;grey97&quot;, color=&quot;grey&quot;) +
+    geom_scatterpie(data = largest, 
+                    aes(lon, lat, r = sqrt(total)/2000),
+                    cols = c(&quot;white&quot;, &quot;black&quot;, &quot;asian&quot;, &quot;others&quot;), 
+                    alpha = 0.5) +
+    scale_fill_manual(
+        breaks = c(&quot;white&quot;, &quot;black&quot;, &quot;asian&quot;, &quot;others&quot;),
+        labels = c(&quot;white alone&quot;, &quot;black alone&quot;, &quot;asian alone&quot;, &quot;others&quot;),
+        values = c(&quot;asian&quot; = &quot;orange&quot;,
+                   &quot;white&quot; = &quot;white&quot;,
+                   &quot;black&quot; = &quot;black&quot;,
+                   &quot;others&quot; = &quot;cyan&quot;)
+    )</code></pre>
+<p>Here’s an example:</p>
+<pre class="bash"><code>## this is a comment
+$ echo this is a command
+this is a command
+
+## edit the file
+$vi foo.md
++++
+date = &quot;2014-09-28&quot;
+title = &quot;creating a new theme&quot;
++++
+
+bah and humbug
+:wq
+
+## show it
+$ cat foo.md
++++
+date = &quot;2014-09-28&quot;
+title = &quot;creating a new theme&quot;
++++
+
+bah and humbug
+$</code></pre>

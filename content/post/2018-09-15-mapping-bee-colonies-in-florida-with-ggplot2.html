@@ -1,0 +1,70 @@
+---
+title: Mapping bee colonies in Florida with ggplot2
+author: ''
+date: '2018-09-15'
+slug: mapping-bee-colonies-in-florida-with-ggplot2
+categories:
+  - R
+tags:
+  - ggplot2
+  - maps
+---
+
+
+
+<p>This is data from the USDA about the number of colonies of bees around the country.</p>
+<p>First import the data. I got the data from the <a href="https://data.world/siyeh/us-bee-stats-by-state/workspace/file?filename=Bee+Colony+Census+Data+by+County.csv">data.world</a> site.</p>
+<div id="tidy-the-data" class="section level1">
+<h1>Tidy the Data</h1>
+<p>I had to do a bit of tidying:</p>
+<ul>
+<li>remove the commas in numbers (i.e., 21,892 needed to be 21892 to be treated as numeric)</li>
+<li>remove the period after St. in St. Johns and St. Lucie in order to match the map dataset</li>
+</ul>
+<p>I feel the expand/grid bit is a little clunky, but I couldn’t figure out how to do it in one pipe.</p>
+<pre class="r"><code>library(tidyverse)
+library(readr)
+
+#Data available here: https://data.world/siyeh/us-bee-stats-by-state/workspace/file?filename=Bee+Colony+Census+Data+by+County.csv
+bees &lt;- read_csv(&quot;Bee Colony Census Data by County.csv&quot;, na = &quot;NA&quot;) %&gt;%
+      filter(State == &quot;FLORIDA&quot;) %&gt;%
+      mutate(Value = as.numeric(gsub(&quot;,&quot;, &quot;&quot;, Value))) %&gt;%
+#some counties have [.]s in their name (i.e. St. Johns, etc.)
+      mutate(County = gsub(&quot;\\.&quot;,&quot;&quot;, County)) %&gt;% 
+      select(Year, State, County, Value)
+
+grid &lt;- bees %&gt;%
+      expand(State, County, Year) 
+
+bees2 &lt;-  full_join(grid, bees)</code></pre>
+</div>
+<div id="get-the-county-outlines-and-connect-to-the-bee-data" class="section level1">
+<h1>Get the county outlines and connect to the bee data</h1>
+<p>Now I make the map, convert it to upper case to match my bee data, and join it to the bee data so they are all in one df.</p>
+<pre class="r"><code>library(ggplot2)
+library(maps)
+
+m.usa &lt;- map_data(&quot;county&quot;) %&gt;%
+      mutate(State = str_to_upper(region, locale = &quot;en&quot;), 
+             County = str_to_upper(subregion, locale = &quot;en&quot;)) %&gt;%
+      full_join(bees2) %&gt;%
+      select(long, lat, group, order, State, County, Year, Value) %&gt;%
+      filter(State == &quot;FLORIDA&quot;) </code></pre>
+</div>
+<div id="graph-it" class="section level1">
+<h1>Graph it</h1>
+<p>Finally, graph it!</p>
+<pre class="r"><code>ggplot(m.usa, aes(x = long,
+                  y = lat,
+                  group = group,
+                  fill = Value)) +
+      geom_polygon(color = &quot;grey50&quot;, size = 0.2) +
+      coord_fixed(1.3) +
+      scale_fill_continuous(low = &quot;white&quot;, high = &quot;red&quot;, na.value = &quot;grey80&quot;) +
+      facet_wrap(~Year) +
+      labs(title = &quot;Number of bee colonies in Florida counties&quot;, 
+             subtitle = &quot;2002-2012&quot;, x = &quot;&quot;, y = &quot;&quot;) +
+      theme(axis.ticks = element_blank(), 
+            axis.text = element_blank())</code></pre>
+<p><img src="/post/2018-09-15-mapping-bee-colonies-in-florida-with-ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>

@@ -1,0 +1,147 @@
+---
+title: 'Moving to the Cloud: Installing RStudio Server on Digital Ocean'
+author: heidi
+date: '2019-03-16'
+slug: moving-to-the-cloud-installing-rstudio-server-on-digital-ocean
+categories:
+  - R
+tags:
+  - Reproducible_research
+---
+
+
+
+<p>I’m moving my workflow to the cloud! It’s faster, I don’t need to buy a fancy new computer to crunch big data sets, it’s the wave of the future, etc.</p>
+<p>Here are my goals:</p>
+<ol style="list-style-type: decimal">
+<li>Set up RStudio Server in the Cloud</li>
+<li>Set it up with all my favorite packages (i.e., the tidyverse), themes, layouts, etc.</li>
+<li>Save that configuration as a template to use for future new projects</li>
+</ol>
+<p>You’ll need a web browser and a terminal app (command line app) on your local computer.</p>
+<div id="generate-an-ssh-key-on-your-computer" class="section level2">
+<h2>1. Generate an SSH key on your computer:</h2>
+<p>For Mac, use Terminal. For *nix computers, use Command Line. For Windows, google using PuTTy for this.</p>
+<p><code>ssh-keygen -t rsa</code></p>
+<p>When prompted, add a password (you can leave blank, but that’s sketchy)</p>
+<p><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code> will copy your key to the clipboard for use in the next step.</p>
+</div>
+<div id="set-up-digital-ocean" class="section level2">
+<h2>2. Set up Digital Ocean</h2>
+<div id="create-an-account-and-secure-it" class="section level4">
+<h4>Create an account and secure it</h4>
+<p>Head to <a href="https://www.digitalocean.com/" class="uri">https://www.digitalocean.com/</a> and create an account. You have to provide a credit card, but you won’t be charged anything, and you’ll get $100 credit.</p>
+<p>Once you are all logged in to Digital Ocean, go to Account &gt; Security &gt; SSH keys. Create a new key and paste your key info (from the last step) into the box. Give it a meaningful name that describes the user and computer it applies to (i.e., Henry_MacBookProKey).</p>
+</div>
+<div id="add-a-port-for-rstudio" class="section level4">
+<h4>Add a port for RStudio</h4>
+<p>Go to Manage &gt; Networking &gt; Firewalls &gt; Create Firewall
+Add a new rule for TCP and change the Port Range to <code>8787</code>.</p>
+<p>You are now ready to safely create your computer!</p>
+</div>
+</div>
+<div id="create-a-droplet-in-digital-ocean" class="section level2">
+<h2>3. Create a droplet in Digital Ocean</h2>
+<p>Select:
+- Ubuntu latest version
+- $10/mo option or greater ($5 one ran out of memory on me)</p>
+<p>Choose to use the SSH key you created earlier (Henry_MacBookPro)</p>
+<p>Note: You’ll only pay the full $10/month if you leave your Digital Ocean computer on and running the whole month. Most of the time, you’ll just start it, do work, and then shut it down and only pay a fraction of that. Plus, you’ve got that $100 credit so you are good for a long time.</p>
+<p>Important: Note the IP address of your new droplet. You’ll need that in a minute.</p>
+</div>
+<div id="install-stuff-on-your-droplet" class="section level2">
+<h2>4. Install stuff on your droplet</h2>
+<p>I didn’t have much luck accessing the computer terminal through Digital Ocean. It was much easier to use Mac Terminal and do everything from there.</p>
+<div id="access-your-droplet-from-your-local-computer" class="section level4">
+<h4>Access your droplet from your local computer</h4>
+<p>From Mac Terminal or other command line, log into your Digital Ocean computer:
+<code>ssh root@&lt;the.ip.address.that.digital.ocean.gave.you&gt;</code></p>
+<p>You’ll need to say you trust the new connection and enter your SSH password from step 1.</p>
+</div>
+<div id="next-install-a-bunch-of-missing-stuff" class="section level4">
+<h4>Next, install a bunch of missing stuff:</h4>
+<p><code>apt-get update</code></p>
+<p><code>sudo apt-get install curl build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev libgdal-dev libproj-dev xorg libx11-dev libglu1-mesa-dev r-cran-rgl</code></p>
+<p>Docker will allow you to install pre-made computer images for a variety of topics. Here we will install RStudio and the tidyverse packages. If you just want vanilla RStudio (without tidyverse), change “tidyverse” into “rstudio” throughout.</p>
+<p><code>snap install docker</code></p>
+<p><code>docker pull rocker/tidyverse:latest</code></p>
+<p>Replace your_password with a real password of your own choosing
+<code>sudo docker run -d -p 8787:8787 -e PASSWORD=your_password --name rstudio rocker/tidyverse</code></p>
+</div>
+<div id="start-rstudio" class="section level4">
+<h4>Start RStudio</h4>
+<p><code>docker start rstudio</code></p>
+<p>RStudio is now running, but invisibly. To see it, go to:
+<a href="http://the.ip.address.that.digital.ocean.gave.you:8787" class="uri">http://the.ip.address.that.digital.ocean.gave.you:8787</a> and login:
+username: rstudio
+password: whatever you used in the last step to replace your_password.</p>
+</div>
+</div>
+<div id="configure-rstudio" class="section level2">
+<h2>5. Configure RStudio</h2>
+<div id="set-your-global-preferences-themes-pane-layouts-etc." class="section level4">
+<h4>Set your Global Preferences, Themes, Pane Layouts, etc.</h4>
+<p>I like the Merbivore or Dracula themes.</p>
+<p>For Pane Layout, I love this layout (and so do most folks who see it):</p>
+<pre><code>Source   |   Console
+------------------------
+History  |   Everything else</code></pre>
+</div>
+<div id="install-packages-you-use-often" class="section level4">
+<h4>Install packages you use often</h4>
+<p>Here’s my list:</p>
+<pre><code>install.packages(c(&quot;here&quot;, 
+                  &quot;ggthemes&quot;,
+                  &quot;scales&quot;,
+                  &quot;ggmap&quot;,
+                  &quot;plotly&quot;,
+                  &quot;forecast&quot;,
+                  &quot;treemapify&quot;,
+                  &quot;dbscan&quot;,
+                  &quot;rmarkdown&quot;,
+                  &quot;flexdashboard&quot;,
+                  &quot;maptools&quot;,
+                  &quot;treemap&quot;, 
+                  &quot;ggtern&quot;))</code></pre>
+</div>
+<div id="create-a-new-project-file-new-project-new-directory-new-project" class="section level4">
+<h4>Create a New Project (File &gt; New Project &gt; New Directory &gt; New Project)</h4>
+<p>Set up the folder structure how you like it. Here is how I usually set mine up:</p>
+<pre><code>MyProject/
+├── docs/
+├── data/
+      ├── raw
+      ├── processed
+├── cleaning/
+├── analysis/
+├── output/
+├── drafts/</code></pre>
+<ul>
+<li><code>docs</code> is where I keep info about the experiment, a data dictionary, etc;</li>
+<li><code>data</code> holds the raw data (if it isn’t on the web or a server);</li>
+<li><code>cleaning</code> contains R scripts that take raw data and generate processed data;</li>
+<li><code>analysis</code> contains R scripts that take processed data and do something with it;</li>
+<li><code>output</code> is where figures and completed documents go. If I ever truly get to where my entire document is in RMarkdown, I’ll probably end there.<br />
+</li>
+<li>But I’m still pretty Word-centric, so I still have a <code>drafts</code> folder where Word documents live.</li>
+</ul>
+<p>If you organize your Projects like this, then you may be interested in the <code>here</code> package. It helps make your projects as portable to other systems as possible. For example, you could say <code>write_xlsx(mydata, here(&quot;output&quot;, &quot;myfile.xlsx&quot;))</code> and you don’t need to know where <code>output</code> is. It is just ‘here’, in your current project, no matter what drive or system it is on. In this case, here(“output”) means MyProject/output. <code>here(&quot;data&quot;, &quot;raw&quot;)</code> is a link to my raw data folder.</p>
+</div>
+</div>
+<div id="save-this-as-a-snapshot-i.e.a-template" class="section level2">
+<h2>6. Save this as a Snapshot (i.e. a template)</h2>
+<p>Snapshots allow you to jump right back here (almost) in the future, so you can start each new project with things already set up the way you like them.</p>
+<p>Back in Digital Ocean, click on your droplet and slide the bar to turn it off. Once it has powered down, go to Snapshots and take a snapshot. I save this with a name like “RStudio-basic-template”.</p>
+</div>
+<div id="finishing-your-session" class="section level2">
+<h2>7. Finishing your session</h2>
+<p>Once you have saved a snapshot, delete your droplet. This will stop you from being charged your hourly rate for server time. You can always pick up again from your snapshot.</p>
+<p>In the future, use this template to launch a brand-new configured droplet.
+To use a saved template, navigate to Manage &gt; Images and create a new droplet from your RStudio-basic-template.<br />
+Once it is ready, note the ip address
+Go to Terminal, and log in (as above: <a href="mailto:root@the.new.ip.address" class="email">root@the.new.ip.address</a>)
+Type <code>docker start rstudio</code>
+Navigate to <a href="http://the.new.ip.address:8787" class="uri">http://the.new.ip.address:8787</a>
+Log in with username: rstudio and password: your previous password</p>
+<p>Continue to save snapshots, but this time instead of naming them templates, name them with meaningful info such as: &quot;2019-03-16_tiger-project_data-cleaning-complete’</p>
+</div>

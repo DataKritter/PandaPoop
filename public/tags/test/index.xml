@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Test on Panda Poop</title>
+    <link>/tags/test/</link>
+    <description>Recent content in Test on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing R Markdown</title>
+      <link>/post/testing-r-markdown/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/testing-r-markdown/</guid>
+      <description>I’m testing to see whether syntax highlighting is working. This is just random code from the internet.
+library(scatterpie) library(totalcensus) library(dplyr)metro &amp;lt;- read_acs1year( year = 2016, states = &amp;quot;US&amp;quot;, table_contents = c( &amp;quot;white = C02003_003&amp;quot;, &amp;quot;black = C02003_004&amp;quot;, &amp;quot;asian = C02003_006&amp;quot; ), geo_headers = &amp;quot;CBSA&amp;quot;, summary_level = &amp;quot;310&amp;quot; ) %&amp;gt;% mutate(others = population - white - black - asian) us &amp;lt;- map_data(&amp;#39;state&amp;#39;) ggplot(us, aes(long, lat)) + geom_map(map=us, aes(map_id=region), fill=&amp;quot;grey97&amp;quot;, color=&amp;quot;grey&amp;quot;) + geom_scatterpie(data = largest, aes(lon, lat, r = sqrt(total)/2000), cols = c(&amp;quot;white&amp;quot;, &amp;quot;black&amp;quot;, &amp;quot;asian&amp;quot;, &amp;quot;others&amp;quot;), alpha = 0.</description>
+    </item>
+    
+  </channel>
+</rss>

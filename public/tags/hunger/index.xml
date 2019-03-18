@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hunger on Panda Poop</title>
+    <link>/tags/hunger/</link>
+    <description>Recent content in Hunger on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/hunger/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Feeding &#34;hungry&#34; animals</title>
+      <link>/post/managing-hunger/</link>
+      <pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/managing-hunger/</guid>
+      <description>People often want to increase an animal&amp;rsquo;s diet because it is &amp;ldquo;acting hungry&amp;rdquo; or it is &amp;ldquo;cleaning up&amp;rdquo; its diet. The problem with this philosophy is that an animal&amp;rsquo;s appetite at a given moment and its overall energy balance are rarely correlated. An obese animal can feel hungry and an emaciated one can feel satiated. The answer is not necessarily to change the diet (unless the animal is not in ideal body condition), but to change the feeding plan.</description>
+    </item>
+    
+  </channel>
+</rss>

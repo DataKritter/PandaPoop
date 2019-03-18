@@ -1,0 +1,86 @@
+---
+title: Tidying data in the tidyverse
+author: Heidi
+date: '2018-09-08'
+slug: tidying-data-in-the-tidyverse
+description: Cleaning up messy data
+categories:
+  - R
+tags: [Tidy_data]
+---
+
+
+
+<p>This is an example of a messy dataset I might receive that needs tidying. Interns measured the length and dorsal girth (measurement around the middle) of several fish over time. Each time they measured the fish, they added a few more lines to the excel sheet for that date. This made data entry very convenient, but isn’t a usable format for data analysis.</p>
+<div class="figure">
+<img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/messydata.gif" alt="Fig 1. Messy Data" />
+<p class="caption"><em>Fig 1. Messy Data</em></p>
+</div>
+<p>It’s not a problem, though, because we have the Tidyverse!</p>
+<p>Our goal is to produce a tidy dataset that we can use. Perhaps we want to graph the growth of the fish over time. Or maybe we want to see if the fish differ in their len:girth ratio in some way. Perhaps we want to see whether there are seasonal changes in size. Look at those variables I just mentioned. Fish, Time, Length, Girth, L:G ratio, Season. Those are things we want to be columns.</p>
+<p>So, our goal is to tidy the data by: - making a new column for FishID (instead of the 4 columns there now) - spreading the column for measurement into separate columns for length and girth - cleaning up missing data</p>
+<div class="figure">
+<img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/tidydata.gif" alt="Fig 2. Tidy Data" />
+<p class="caption"><em>Fig 2. Tidy Data</em></p>
+</div>
+<p>So, first we start by loading some basic packages to get going.</p>
+<pre class="r"><code>library(readxl)
+library(tidyverse)
+#Read in our mock raw data file
+Morphs &lt;- read_xlsx(&quot;../attachments/FishMorphometrics.xlsx&quot;, 
+    col_types = c(&quot;date&quot;, &quot;text&quot;, &quot;numeric&quot;,&quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;), 
+    na = &quot;NA&quot;)</code></pre>
+<p>Now we are ready to tidy! This is what I came up with. It’s a little cludgy, but it works, and it illustrates the Tidyverse grammar nicely (which is really the point here, after all).</p>
+<pre class="r"><code>MorphTidy &lt;- Morphs %&gt;%
+#Rename the date column because (1) I hate all caps and (2) `Date` is a reserved word that can sometimes be problematic if used as a variable name.  Best to rename it something like `TheDate` or `DateMeas`. 
+  rename(MeasDate = DATE) %&gt;%
+
+#Gather the fish into a single column
+  gather(starts_with(&quot;Fish&quot;), key = FishID, value = Meas ) %&gt;%
+      
+#Add row numbers to avoid &quot;duplicate identifiers&quot; error.  Each row needs to have unique info, but in this case some of the fish/date lines have the same info.
+  mutate(i = row_number()) %&gt;%
+  spread(key = Measure, value = Meas) %&gt;%
+      
+#After spreading we don&#39;t need the identifier anymore.
+  select(-i) %&gt;%
+
+#The various measurements are now in different rows.  This code gets them to be in the same row and then removes any dates where fish weren&#39;t measured.
+  arrange(FishID, MeasDate) %&gt;%
+  group_by(FishID, MeasDate) %&gt;%
+  summarize(len = mean(Length, na.rm = TRUE), 
+            dg = mean(DG, na.rm = TRUE)) %&gt;%
+  filter((len + dg) &gt; 0) %&gt;%
+  mutate(len = ifelse(len == 0, NA, len), 
+         dg = ifelse(dg == 0, NA, dg)) %&gt;%
+  arrange(FishID, MeasDate)
+
+#If desired, save the cleaned file for future work
+#library(writexl)
+#write_xlsx(MorphsTidy, &quot;morphstidy.xlsx&quot;)</code></pre>
+<p>Now, if we want, we can graph it.</p>
+<p>Looking at changes in length over time…</p>
+<pre class="r"><code>ggplot(MorphTidy, aes(x = MeasDate, y = len, color = FishID)) + geom_point()</code></pre>
+<p><img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Looking at changes in girth over time…</p>
+<pre class="r"><code>ggplot(MorphTidy, aes(x = MeasDate, y = dg, color = FishID)) + geom_point()</code></pre>
+<p><img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Looking at differences in length:girth ratio…</p>
+<pre class="r"><code>MorphTidy2 &lt;- MorphTidy %&gt;%
+      mutate(lgr = len/dg)
+
+ggplot(MorphTidy2, aes(x=FishID, y = lgr, color = FishID)) +
+      geom_boxplot()</code></pre>
+<p><img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Looking at seasonal changes…</p>
+<pre class="r"><code>library(lubridate)
+MorphTidy3 &lt;- MorphTidy %&gt;%
+      mutate(month = month(MeasDate, label = TRUE))
+
+p &lt;- ggplot(MorphTidy3, aes(x = month, y = dg)) + geom_boxplot()
+
+q &lt;- ggplot(MorphTidy3, aes(x = month, y = len)) + geom_boxplot()
+
+library(gridExtra)
+grid.arrange(p, q, ncol = 2)</code></pre>
+<p><img src="/post/2018-09-08-tidying-data-in-the-tidyverse_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>

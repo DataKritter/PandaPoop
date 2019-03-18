@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Panda Poop</title>
+    <link>/</link>
+    <description>Recent content on Panda Poop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 16 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Moving to the Cloud: Installing RStudio Server on Digital Ocean</title>
+      <link>/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/</link>
+      <pubDate>Sat, 16 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/</guid>
+      <description>I’m moving my workflow to the cloud! It’s faster, I don’t need to buy a fancy new computer to crunch big data sets, it’s the wave of the future, etc.
+Here are my goals:
+Set up RStudio Server in the Cloud Set it up with all my favorite packages (i.e., the tidyverse), themes, layouts, etc. Save that configuration as a template to use for future new projects  You’ll need a web browser and a terminal app (command line app) on your local computer.</description>
+    </item>
+    
+    <item>
+      <title>Mapping bee colonies in Florida with ggplot2</title>
+      <link>/post/mapping-bee-colonies-in-florida-with-ggplot2/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mapping-bee-colonies-in-florida-with-ggplot2/</guid>
+      <description>This is data from the USDA about the number of colonies of bees around the country.
+First import the data. I got the data from the data.world site.
+Tidy the Data I had to do a bit of tidying:
+ remove the commas in numbers (i.e., 21,892 needed to be 21892 to be treated as numeric) remove the period after St. in St. Johns and St. Lucie in order to match the map dataset  I feel the expand/grid bit is a little clunky, but I couldn’t figure out how to do it in one pipe.</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Research</title>
+      <link>/post/reproducible-research/</link>
+      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-research/</guid>
+      <description>I’ve been gradually changing my workflows to be more in line with the prinicples of reproducible research. It has been life-changing – I can go back and run analyses from last year on a different computer and…it just works. It’s absolutely magical.
+I’m not fully reproducible yet - I shudder to think what someone would do if they came along my Projects folder at this exact moment, but I’m getting closer.</description>
+    </item>
+    
+    <item>
+      <title>Basic Shiny Example: A survey using filters</title>
+      <link>/post/basic-shiny-example-a-survey-using-filters/</link>
+      <pubDate>Sat, 08 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/basic-shiny-example-a-survey-using-filters/</guid>
+      <description>Today at our R-Ladies meeting, a new R user wanted to know if R could be a platform to help people pick an insurance strategy based on some basic demographic data.
+We weren’t sure either, so we tried to see if we could make a simple working example of the sort of thing she envisioned.
+This is what we developed. You can download the dummy data here and see the app in action here.</description>
+    </item>
+    
+    <item>
+      <title>Tidying data in the tidyverse</title>
+      <link>/post/tidying-data-in-the-tidyverse/</link>
+      <pubDate>Sat, 08 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tidying-data-in-the-tidyverse/</guid>
+      <description>This is an example of a messy dataset I might receive that needs tidying. Interns measured the length and dorsal girth (measurement around the middle) of several fish over time. Each time they measured the fish, they added a few more lines to the excel sheet for that date. This made data entry very convenient, but isn’t a usable format for data analysis.
+Fig 1. Messy Data
+ It’s not a problem, though, because we have the Tidyverse!</description>
+    </item>
+    
+    <item>
+      <title>Playing with gganimate</title>
+      <link>/post/playing-with-gganimate/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/playing-with-gganimate/</guid>
+      <description>Setup To get started, load the tidyverse (or just ggplot2) and gganimate.
+You can’t install gganimate from cran yet, so for now, you’ll need:
+# install.packages(&#39;devtools&#39;) devtools::install_github(&#39;thomasp85/gganimate&#39;)
+library(tidyverse) library(gganimate)  Basics of gganimate Here’s an canned example using the mtcars dataset.
+This uses states (i.e. categorical variables) for the transition.
+library(ggplot2) library(gganimate) ggplot(mtcars, aes(factor(cyl), mpg, color = as.factor(cyl))) + geom_boxplot() + # Here comes the gganimate code transition_states( gear, transition_length = 2, state_length = 1 ) + enter_fade() + exit_shrink() + ease_aes(&amp;#39;sine-in-out&amp;#39;) Here’s another example looking at toothgrowth in guinea pigs fed either orange juice (OJ) or vitamin C supplement (VC) at increasing doses.</description>
+    </item>
+    
+    <item>
+      <title>Testing R Markdown</title>
+      <link>/post/testing-r-markdown/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/testing-r-markdown/</guid>
+      <description>I’m testing to see whether syntax highlighting is working. This is just random code from the internet.
+library(scatterpie) library(totalcensus) library(dplyr)metro &amp;lt;- read_acs1year( year = 2016, states = &amp;quot;US&amp;quot;, table_contents = c( &amp;quot;white = C02003_003&amp;quot;, &amp;quot;black = C02003_004&amp;quot;, &amp;quot;asian = C02003_006&amp;quot; ), geo_headers = &amp;quot;CBSA&amp;quot;, summary_level = &amp;quot;310&amp;quot; ) %&amp;gt;% mutate(others = population - white - black - asian) us &amp;lt;- map_data(&amp;#39;state&amp;#39;) ggplot(us, aes(long, lat)) + geom_map(map=us, aes(map_id=region), fill=&amp;quot;grey97&amp;quot;, color=&amp;quot;grey&amp;quot;) + geom_scatterpie(data = largest, aes(lon, lat, r = sqrt(total)/2000), cols = c(&amp;quot;white&amp;quot;, &amp;quot;black&amp;quot;, &amp;quot;asian&amp;quot;, &amp;quot;others&amp;quot;), alpha = 0.</description>
+    </item>
+    
+    <item>
+      <title>Feeding &#34;hungry&#34; animals</title>
+      <link>/post/managing-hunger/</link>
+      <pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/managing-hunger/</guid>
+      <description>People often want to increase an animal&amp;rsquo;s diet because it is &amp;ldquo;acting hungry&amp;rdquo; or it is &amp;ldquo;cleaning up&amp;rdquo; its diet. The problem with this philosophy is that an animal&amp;rsquo;s appetite at a given moment and its overall energy balance are rarely correlated. An obese animal can feel hungry and an emaciated one can feel satiated. The answer is not necessarily to change the diet (unless the animal is not in ideal body condition), but to change the feeding plan.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/404/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/404/</guid>
+      <description> Error 404: Page Not Found It seems that the page that you&amp;rsquo;re trying to access doesn&amp;rsquo;t exist. 😟 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>So, Who Am I? 
+I’m a nutritional ecologist who likes making tools for my colleagues. This blog is my place to keep tidbits of things I find useful and a way to collect my ideas for future projects.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,52 @@
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Panda Poop"
+theme = "hugo-dream-plus"
+
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+pygmentsOptions = "linenos=table"
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+#disqusShortname = ""
+enableRobotsTXT = true
+
+#Enable Hugo Emoji Conversion
+enableEmoji=true
+
+[params]
+	author = "Panda Poop"
+	description = "Improving animal health through data science"
+	avatar = "/img/heidielephant.png"
+	motto = "Improving animal health through data science"
+	enableToc = true
+	enableShareCard = true
+
+	favicon = "/img/favicon.gif"
+
+  	#Background settings
+	enableColorBG= true
+      #bgImage = "/img/bg5.jpg"
+
+	bgBlur = true
+
+	#Post-displaying Settings
+	enableTags = true
+	enableCategories = true
+
+	#Cards or posts shown per page
+	itemsPerPage = 24
+
+	#Set whether you're hosting "cards" or "post"
+	contentType = "post"
+
+	#Enable Twitter Emoji
+	twitterEmoji=true
+
+[social]
+	email = "cricketbirdy@gmail.com"
+	github = "cricketbird"
+	stackoverflow = "cricketbird"
+	twitter = "pandapoop42"
+	siteStartYear = 2018
+

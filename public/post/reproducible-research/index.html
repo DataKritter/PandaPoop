@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><style>
+body {
+	display: block;
+	--colorBG: "#40e0d0, #ff8c00, #ff0080";background: linear-gradient(to right, var(--colorBG)) !important;
+	
+}
+
+body, body.pushable {
+	background-repeat: no-repeat;
+  	background-attachment: fixed;
+  	background-size: cover !important;
+}
+
+.ui.red.label, .ui.red.labels .label {
+    background-color: #a333c8!important;
+    border-color: #a333c8!important;
+    color: #fff!important;
+}
+
+
+</style><title>
+Reproducible Research
+</title><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="author" content="Heidi" />
+	<meta name="description" content="Improving my workflow" />
+<meta name="generator" content="Hugo 0.47.1" />
+
+<link rel="shortcut icon" href="/img/favicon.gif">
+
+<link rel="canonical" href="/post/reproducible-research/" />
+<link rel="alternative" href="/index.xml" title="Panda Poop" type="application/atom+xml"/>
+<link rel="stylesheet" href="/css/atelier-cave-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+<style>
+body.pushable {
+	display: block;background: linear-gradient(to right, var(--colorBG)) !important;
+	 ;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="/css/site.css"><link rel="stylesheet" type="text/css" href="static/css/highlight.css">
+<script>
+	var colorBG =  true 
+	var enabledPost = true
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+</head>
+
+<body><script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;var gradients = [
+	  ['#726C84', '#908AA1'], 
+	  ['#726C84', '#A79EB6'], 
+	  ['#726C84', '#736E86'], 
+	  ['#726C84', '#5E5A76'] 
+	]
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]))
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min)
+	  max = Math.floor(max)
+	  var random
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random
+	      break
+	    }
+	  }
+	  return random
+	}
+
+	function connect(arr) {
+	  var str = ''
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', '
+	    } else {
+	      str += arr[i]
+	    }
+	  }
+	  return str
+	}
+</script><div id="sidebar" class="ui sidebar inverted vertical menu">
+	<section id="author" class="ui top attached center aligned inverted segment"><div class="ui small circular image">
+	<img src="/img/heidielephant.png">
+</div>
+<h3 class="ui header">Panda Poop
+	<div class="sub header">Improving animal health through data science</div>
+</h3>
+</section><section class="ui attached center aligned inverted segment sidebar-dream-tags">
+<a class="ui label" href="/tags/energy" title="energy">energy</a>
+
+<a class="ui label" href="/tags/gganimate" title="gganimate">gganimate</a>
+
+<a class="ui label" href="/tags/ggplot2" title="ggplot2">ggplot2</a>
+
+<a class="ui label" href="/tags/hunger" title="hunger">hunger</a>
+
+<a class="ui label" href="/tags/maps" title="maps">maps</a>
+
+<a class="ui label" href="/tags/reproducible_research" title="reproducible_research">reproducible_research</a>
+
+<a class="ui label" href="/tags/shiny" title="shiny">shiny</a>
+
+<a class="ui label" href="/tags/test" title="test">test</a>
+
+<a class="ui label" href="/tags/tidy_data" title="tidy_data">tidy_data</a>
+
+</section>	
+	
+	<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+		<div class="ui inverted accordion">
+<div class="title">
+	<i class="dropdown icon"></i>
+	<a class="link" href="/categories/nutrition">nutrition</a>
+</div>
+<div class="content">
+
+	<a class="item" href="/post/managing-hunger/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Feeding &#34;hungry&#34; animals</p>
+		</div>
+	</a>
+
+</div>
+
+<div class="title">
+	<i class="dropdown icon"></i>
+	<a class="link" href="/categories/r">r</a>
+</div>
+<div class="content">
+
+	<a class="item" href="/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Moving to the Cloud: Installing RStudio Server on Digital Ocean</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/mapping-bee-colonies-in-florida-with-ggplot2/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Mapping bee colonies in Florida with ggplot2</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/reproducible-research/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Reproducible Research</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/basic-shiny-example-a-survey-using-filters/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Basic Shiny Example: A survey using filters</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/tidying-data-in-the-tidyverse/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Tidying data in the tidyverse</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/playing-with-gganimate/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Playing with gganimate</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/testing-r-markdown/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Testing R Markdown</p>
+		</div>
+	</a>
+
+</div>
+
+</div>
+	</section>
+	
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+<p>© 2019 Panda Poop</p>
+    
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p></section>
+</div>
+<div class="pusher">
+		<div class="flipper">
+			<div class="front">
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link user icon dream-flip-toggle" title="About Me"></i>
+	</div><div class="item">
+		<a href="/">
+			<i class="inverted big link home icon" title="Home"></i>
+		</a>
+	</div>
+	<div class="item">
+		<a href="/post">
+			<i class="inverted big link tree icon" title="Archive"></i>
+		</a>
+	</div>
+	<div class="item">
+		<a href="/tags">
+			<i class="inverted big link tags icon" title="All Tags"></i>
+		</a>
+	</div>
+	<div class="item">
+		<a href="/categories">
+			<i class="inverted big link folder icon" title="All Categories"></i>
+		</a>
+    </div>
+	<div class="ui container tablet computer only grid">
+		<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+			<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+		</div>
+	</div>
+	
+</nav>
+
+<div class="ui centered grid">
+	<div class="sixteen wide mobile only column"><div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">
+		<header id="author" class="ui top attached center aligned inverted segment"><div class="ui small circular image">
+	<img src="/img/heidielephant.png">
+</div>
+<h3 class="ui header">Panda Poop
+	<div class="sub header">Improving animal health through data science</div>
+</h3>
+</header>
+		<div class=" title header-title"><div id="tag-category-pop" class="ui red right corner label">
+				<i class="hand point icon down"title="Click this to pop tags and categories"></i>
+			</div></div>
+		<div id="tag-category" class=" content"><section class="ui attached center aligned inverted segment dream-tags none flexbox">
+<a class="ui label" href="/tags/energy" title="energy">energy</a>
+
+<a class="ui label" href="/tags/gganimate" title="gganimate">gganimate</a>
+
+<a class="ui label" href="/tags/ggplot2" title="ggplot2">ggplot2</a>
+
+<a class="ui label" href="/tags/hunger" title="hunger">hunger</a>
+
+<a class="ui label" href="/tags/maps" title="maps">maps</a>
+
+<a class="ui label" href="/tags/reproducible_research" title="reproducible_research">reproducible_research</a>
+
+<a class="ui label" href="/tags/shiny" title="shiny">shiny</a>
+
+<a class="ui label" href="/tags/test" title="test">test</a>
+
+<a class="ui label" href="/tags/tidy_data" title="tidy_data">tidy_data</a>
+
+</section><section class="ui attached inverted segment dream-categories both flexbox">
+			<div class="inverted accordion">
+<div class="title">
+	<i class="dropdown icon"></i>
+	<a class="link" href="/categories/nutrition">nutrition</a>
+</div>
+<div class="content">
+
+	<a class="item" href="/post/managing-hunger/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Feeding &#34;hungry&#34; animals</p>
+		</div>
+	</a>
+
+</div>
+
+<div class="title">
+	<i class="dropdown icon"></i>
+	<a class="link" href="/categories/r">r</a>
+</div>
+<div class="content">
+
+	<a class="item" href="/post/moving-to-the-cloud-installing-rstudio-server-on-digital-ocean/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Moving to the Cloud: Installing RStudio Server on Digital Ocean</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/mapping-bee-colonies-in-florida-with-ggplot2/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Mapping bee colonies in Florida with ggplot2</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/reproducible-research/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Reproducible Research</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/basic-shiny-example-a-survey-using-filters/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Basic Shiny Example: A survey using filters</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/tidying-data-in-the-tidyverse/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Tidying data in the tidyverse</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/playing-with-gganimate/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Playing with gganimate</p>
+		</div>
+	</a>
+
+	<a class="item" href="/post/testing-r-markdown/">
+		<div>
+			<i class="dot circle icon "></i>
+			<p>Testing R Markdown</p>
+		</div>
+	</a>
+
+</div>
+
+</div>
+			</section></div>
+		<footer class="ui bottom attached center aligned inverted segment">
+<p>© 2019 Panda Poop</p>
+    
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p></footer>
+	</div>
+</div></div>
+	<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+		<section class="ui secondary top attached black segment post-head">
+			<h1 class="post-title">
+				Reproducible Research
+			</h1>
+			<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>9 Sep 2018</span></div>
+					<div><span><i class="clock outline icon"></i>7 min read</span></div>
+					
+			</div>
+			<hr>
+			
+			<article class="post-content twemoji">
+				<p>I’ve been gradually changing my workflows to be more in line with the prinicples of reproducible research. It has been life-changing – I can go back and run analyses from last year on a different computer and…it just works. It’s absolutely magical.</p>
+<p>I’m not fully reproducible yet - I shudder to think what someone would do if they came along my Projects folder at this exact moment, but I’m getting closer. Here are the main reasons I’m going this route and the tools I’m using to do so.</p>
+<p>There are lots of resources for reproducible research, but they are mostly overkill for my level. So, here’s what I’ve taken from the discussion.</p>
+<div id="what-is-reproducible-research" class="section level1">
+<h1>What is reproducible research?</h1>
+<blockquote>
+<p>A reproducible workflow is one in which each step of the analytical process is clearly documented in such a way that someone — <em>and here it is better to imagine that person is not you</em> — can retrace your steps and verify the exact results that you presented. <em>–Baumer BS. (2017) <a href="https://doi.org/10.7287/peerj.preprints.3160v2">Lessons from between the white lines for isolated data scientists</a>. PeerJ Preprints 5:e3160v2</em></p>
+</blockquote>
+</div>
+<div id="why-do-reproducible-research" class="section level1">
+<h1>Why do reproducible research?</h1>
+<ul>
+<li>If I can retrace my steps, I can be more confident in my results.</li>
+<li>If other people can follow my steps, they will trust my results more.</li>
+<li>If other people can follow my steps, they can help me when I have problems.</li>
+<li>If other people can follow my steps, they can learn from me.</li>
+<li>If I can follow other people’s steps, I can learn from them.</li>
+<li>I want to be kind to “my future self”. I might get asked to rerun an old analysis or to pass on my projects to someone else. It would be so much easier if that was relatively simple to do and didn’t require my computer to have a particular file structure or software to do so.</li>
+</ul>
+</div>
+<div id="my-key-principles-of-rr" class="section level1">
+<h1>My key principles of RR:</h1>
+<ol style="list-style-type: decimal">
+<li><h2 id="raw-data-is-inviolable">Raw data is inviolable&nbsp;<a class="anchor" href="#raw-data-is-inviolable"><i class="small linkify icon"></i></a> </h2>
+<ul>
+<li><strong>Physically isolate raw data</strong> (different folder, server, etc.)</li>
+<li><strong>Absolutely no raw data manipulation in Excel.</strong> It is (nearly) impossible to retrace point-and-click steps from Excel.<br> - <strong>No formulas.</strong> Ever.<br />
+- <strong>No sorting.</strong> Ever.</li>
+<li><strong>Use automated methods</strong> to get data wherever possible (SQL, web scraping, <code>read_xlsx()</code>, etc.)</li>
+</ul></li>
+<li><h2 id="always-work-from-a-blank-slate">Always work from a blank slate&nbsp;<a class="anchor" href="#always-work-from-a-blank-slate"><i class="small linkify icon"></i></a> </h2>
+It’s easy to generate a bunch of variables and dataframes along the way. You might create a graph that refers to an earlier version of a dataset (which is still in memory), but upon running the script, that dataset is nowhere to be found. You are being haunted by the <em>Ghost of Data Past</em>. To exorcise these ghosts forever, do the following:
+<ul>
+<li>“Restart R and Run All Chunks” (Session Menu or inline Run menu)) often. Your script should work from beginning to end in a fresh instance of R.</li>
+<li>Change your RStudio settings - Do NOT restore .RData into workspace at startup - Never save workspace to .RData on exit <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Tired of saying &quot;No&quot; each time RStudio asks you if you want to save your workspace upon exit? You can tell RStudio to stop asking with Preferences &gt; General &gt; Save workspace to .RData on exit Never<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/sJeBuRfRvp">pic.twitter.com/sJeBuRfRvp</a></p>&mdash; Sharon Machlis (@sharon000) <a href="https://twitter.com/sharon000/status/1032639710714363904?ref_src=twsrc%5Etfw">August 23, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</li>
+</ul></li>
+<li><h2 id="organize-using-projects">Organize Using Projects&nbsp;<a class="anchor" href="#organize-using-projects"><i class="small linkify icon"></i></a> </h2>
+In R, Projects are a folder in which you can keep all of your files related to a given analysis. My projects don’t usually contain very many files so I keep everything at the root level. Many data scientists, though, make separate sub-folders inside their project folder for data, image, scripts, etc..</li>
+</ol>
+<p>The primary feature of projects for me is that they allow me to have several data projects going at once in separate instances of R.</p>
+<p>The other key feature is that if all of your files are in the same directory, you can use local references instead of full paths.</p>
+<p>Using full paths is a mess, and if I ever move my folder, everything breaks.</p>
+<pre class="r"><code>library(readxl)
+mydata &lt;- read_xlsx(&quot;C:/HD/MyFiles/MyProjects/BigDataProject/myfile.xlsx&quot;).</code></pre>
+<p>In a project, though, I can just use short filenames and they will continue to work indenfinitely - RStudio just finds them.</p>
+<pre class="r"><code>library(readxl)
+mydata &lt;- read_xlsx(&quot;myfile.xlsx&quot;)</code></pre>
+<p>In my workflow, those are the “laws”. However, there are a few more things that I think improve my coding style, making my analyses more reproducible by myself and hopefully others.</p>
+</div>
+<div id="key-style-and-workflow-choices" class="section level1">
+<h1>Key Style and Workflow Choices</h1>
+<ol style="list-style-type: decimal">
+<li><h2 id="use-meaningful-names-consistently">Use meaningful names consistently&nbsp;<a class="anchor" href="#use-meaningful-names-consistently"><i class="small linkify icon"></i></a> </h2></li>
+</ol>
+<ul>
+<li><em>Filenames</em> should be: (per <a href="http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf">Jenny Bryan</a>)
+<ul>
+<li><strong>Machine readable</strong> <em>2018-12-09_bird-growth_tidy.rmd</em> - This way I can search by date (2018), by project (bird-growth) or by document type (tidy.rmd)</li>
+<li><strong>Human readable</strong> - project names and file types are clear.</li>
+<li><strong>Plays well with default ordering</strong> - dates with year first sort properly. You can also do this with suffixes tidy1.rmd, tidy2.rmd (for sequential scripts - not versions of the same thing!)</li>
+<li><strong>Punctuate</strong> - Use hyphens between words within a chunk, and underscores between chunks</li>
+<li><strong>No spaces</strong></li>
+<li><strong>Names</strong> - I’m not great at this, but I’d like to be consistently use “tidy.rmd, explore.rmd, analysis.rmd, report.rmd” as filenames (or, if small enough, all in one file)</li>
+</ul></li>
+<li><em>Variable</em> names should be:
+<ul>
+<li><strong>Short, but meaningful</strong> (fishgrowth vs. myvar or mydf)</li>
+<li>I can’t ever seem to be consistent on using CamelCase vs. snake_case, but in theory you should pick one and stick with it.</li>
+<li><strong>No spaces</strong></li>
+</ul></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><h2 id="tidy-the-data-with-a-script">Tidy the data with a script&nbsp;<a class="anchor" href="#tidy-the-data-with-a-script"><i class="small linkify icon"></i></a> </h2>
+Hadley Wickham coined the term “Tidy Data” to describe data with the following features:
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table. <a href="http://dx.doi.org/10.18637/jss.v059.i10">Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1 - 23. doi:</a></li>
+</ol></li>
+</ol>
+<p>Tidy data is easy to work with, easy to analyze, easy to understand. To get from messy data to tidy data (usually) requires a lot of steps. Scripting those steps ensures that I can do my “data munging” steps again if the raw data gets updated with new values. Depending on length, I either do these as a standalone code block in an R Notebook, or as a standalone file called tidy.rmd.</p>
+<p>To tidy data, the tools in <code>dplyr</code> and <code>tidyr</code> are invaluable. I wrote a <a href="tidying-data-in-the-tidyverse.html">post</a> about tidying data.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><h2 id="use-the-pipe">Use the pipe!&nbsp;<a class="anchor" href="#use-the-pipe"><i class="small linkify icon"></i></a> </h2>
+The pipe may be the most life-changing aspect I’ve learned here. The pipe makes code so much more readable that it really helps when I go back and want to know what a script did.</li>
+</ol>
+<p>Here’s an example without the pipe. I had to create 2 extra dummy variables and it isn’t very readable.</p>
+<pre class="r"><code>library(dplyr)
+just4cyl &lt;- filter(mtcars, cyl == 4)
+four_cyl_with_ratio &lt;- mutate(just4cyl, gcratio = gear/carb)
+clean_cyl_with_ratio &lt;- select(four_cyl_with_ratio, hp, wt, gcratio)</code></pre>
+<p>And an example using the pipe. So much better, no? The verbs are lined up and it is clear what I did.</p>
+<pre class="r"><code>library(dplyr)
+clean_cyl_with_ratio &lt;- mtcars %&gt;%
+      filter(cyl == 4) %&gt;%
+      mutate(gcratio = gear/carb) %&gt;%
+      select(hp, wt, gcratio)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><h2 id="comment-liberally">Comment liberally&nbsp;<a class="anchor" href="#comment-liberally"><i class="small linkify icon"></i></a> </h2>
+<p>Especially with R Notebooks, adding descriptive info about your thought process is a breeze. Explain to your future self what you were trying to do and what cludgy workarounds you might have employed along the way.</p></li>
+<li><h2 id="save-common-tasks-as-functionsscripts">Save common tasks as functions/scripts&nbsp;<a class="anchor" href="#save-common-tasks-as-functionsscripts"><i class="small linkify icon"></i></a> </h2>
+<p>If you find yourself doing the same thing over and over, write a function or save the code as a script. Hadley’s rule of thumb is anything you do more than twice, but for me the pain of copying and pasting vs. writing a function makes the cutoff for me anything I do more than 10x.</p></li>
+<li><h2 id="use-version-control">Use version control&nbsp;<a class="anchor" href="#use-version-control"><i class="small linkify icon"></i></a> </h2>
+<p>I only know git/github, which is baked into RStudio. Having regular backups and history of my decisions is a lifesaver. Learning it has been a curve, and I’m sure I don’t really understand it. My basic trend is to commit a change at the end of every “complete thought”, whether that is an r code block that produces the output I like, some text that forms a complete thought, etc. I try to only commit when everything is working fine, so I can use it as a restore point.</p></li>
+</ol>
+</div>
+
+			</article>
+		</section>
+		<section class="ui secondary attached segment dream-tags">
+<a class="ui label" href="/tags/energy" title="energy">energy</a>
+
+<a class="ui label" href="/tags/gganimate" title="gganimate">gganimate</a>
+
+<a class="ui label" href="/tags/ggplot2" title="ggplot2">ggplot2</a>
+
+<a class="ui label" href="/tags/hunger" title="hunger">hunger</a>
+
+<a class="ui label" href="/tags/maps" title="maps">maps</a>
+
+<a class="ui label" href="/tags/reproducible_research" title="reproducible_research">reproducible_research</a>
+
+<a class="ui label" href="/tags/shiny" title="shiny">shiny</a>
+
+<a class="ui label" href="/tags/test" title="test">test</a>
+
+<a class="ui label" href="/tags/tidy_data" title="tidy_data">tidy_data</a>
+
+
+		</section><section class="ui secondary bottom attached segment share row box"><div class="author"><img class="avatar" src="/img/heidielephant.png">
+	
+</div>
+<div class="info grow flexbox"><a href="https://twitter.com/pandapoop42">
+	
+	<p class="name">Panda Poop</p></a>
+	
+	<p class="desc">Improving animal health through data science</p>		
+</div>
+<section class="buttons row box">
+	<div class="facebook none flexbox" href="#" onclick="window.open(
+			'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+			'facebook-share-dialog',
+			'width=626,height=436'); return false;">
+		<button class="ui facebook button"><i class="facebook icon"></i>Share</button>
+	</div>
+	<div class="twitter none flexbox" onclick="window.open('https://twitter.com/intent/tweet?text=Read &quot;Reproducible Research &quot; by @pandapoop42 \/post\/reproducible-research\/','_self')">
+		<button class="ui twitter button"><i class="twitter icon"></i>Tweet</button>
+	</div>
+</section>
+</section>
+		<section class="ui secondary attached segment copyright">
+			
+		</section>
+		
+
+
+	</div>
+</div>
+
+			</div>
+			<div class="back"><nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link chevron circle left icon icon dream-flip-toggle" title="About Me"></i>
+	</div><div class="item">
+	<a href="https://github.com/cricketbird" target="_blank">
+		<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+	</a>
+</div>
+<div class="item">
+	<a href="mailto:cricketbirdy@gmail.com">
+		<i id="ico" class="inverted big link mail icon" title="Email"></i>
+	</a>
+</div>
+<div class="item">
+	<a href="https://twitter.com/pandapoop42" target="_blank">
+		<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+	</a>
+</div>
+<div class="item">
+	<a href="https://www.stackoverflow.com/users/cricketbird" target="_blank">
+		<i id="ico" class="inverted big link stack overflow icon" title="Stack Overflow"></i>
+	</a>
+</div>
+
+</nav>
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments"><div class="ui inverted segment">
+	<article class="twemoji"><h1>So, Who Am I?</h1>
+
+<hr />
+
+<p><br>
+I’m a nutritional ecologist who likes making tools for my colleagues.  This blog is my place to keep tidbits of things I find useful and a way to collect my ideas for future projects.</p>
+
+<p><img src="/./about_files/heididogfeed.png" alt="heidi and dog" /></p>
+</article>
+</div></section>
+	</div>
+</div></div>
+		</div>
+	</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/site.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script><script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.6"></script>
+<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+<script>
+	(function () {
+	  console.log("Twemoji up and making stuff colourful!");
+	  for (var b = document.getElementsByClassName("twemoji"), a = 0; a < b.length; a++) {
+		twemoji.parse(b[a]);
+	  }
+	})();
+</script>
+
+</body>
+
+</html>
