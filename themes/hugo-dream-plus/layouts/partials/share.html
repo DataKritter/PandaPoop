@@ -1,21 +1,27 @@
+{{/*Override author details if they exist in post's frontmatter*/}}
+{{ $authorName := .Params.author.name | default $.Site.Params.author.name }}
+{{ $flag := cond (and (ne $.Site.Params.author.avatar nil) (eq $.Site.Params.author.name $authorName)) true false }}
+{{ $authorAvatar := .Params.author.avatar | default (cond $flag $.Site.Params.author.avatar (index (seq 1 4 | shuffle) 0 )) }}
+{{ $avatarFlag := cond (ne .Params.author.avatar nil) false (not $flag) }}
+{{ $authorDesc := .Params.author.desc | default $.Site.Params.author.motto }}
+{{ $twitter := .Params.author.twitter | default (cond (and (ne $.Site.Social.twitter nil) $flag) $.Site.Social.twitter "") }}
+
+{{/*Author description*/}}
 <div class="author">
-	{{- if .Site.Params.avatar -}}
-	<img class="avatar" src="{{ .Site.Params.avatar }}">
+	{{ if $avatarFlag }}
+	<img class="avatar" src="/img/avatar{{ $authorAvatar }}.svg">
 	{{ else }}
-	{{- .Scratch.Set "avatar" (index (shuffle (seq 1 4)) 0 ) -}}
-	<img class="avatar" src="/img/avatar{{ .Scratch.Get `avatar` }}.svg">
+	<img class="avatar" src="{{ $authorAvatar }}">
 	{{ end }}
 </div>
-<div class="info grow flexbox"> 
-	{{- if .Site.Social.twitter -}}
-	<a href="https://twitter.com/{{ .Site.Social.twitter }}">
-	{{ end }}
-	<p class="name">{{ .Site.Params.author }}</p>
-	{{- if .Site.Social.twitter -}}
-	</a>
-	{{ end }}
-	<p class="desc">{{ .Site.Params.motto }}</p>		
+<div class="info grow flexbox">
+	{{ with $twitter }}<a href="https://twitter.com/{{ $twitter }}">{{ end }}
+	<p class="name">{{ $authorName }}</p>
+	{{ with $twitter }}</a>{{ end }}
+	<p class="desc">{{ $authorDesc }}</p>
 </div>
+
+{{/*Social buttons*/}}
 <section class="buttons row box">
 	<div class="facebook none flexbox" href="#" onclick="window.open(
 			'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),

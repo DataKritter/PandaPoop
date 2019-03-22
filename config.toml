@@ -24,11 +24,14 @@ enableEmoji=true
 
 	favicon = "/img/favicon.gif"
 
-  	#Background settings
-	enableColorBG= true
-      #bgImage = "/img/bg5.jpg"
+      #Skip building these files
+      ignoreFiles = ["content/404.md", "content/about.md", "content/cards/\\.*"]
 
-	bgBlur = true
+ 	#Background settings
+	enableColorBG= true
+	bgList = ["/images/bg1.jpeg", "/images/bg2.jpeg", "/images/bg3.jpeg"]
+	bgBlur = "0.2"
+
 
 	#Post-displaying Settings
 	enableTags = true

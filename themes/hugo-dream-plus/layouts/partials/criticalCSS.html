@@ -1,25 +1,17 @@
 <style>
-body {
-	display: block;
-	--colorBG: "#40e0d0, #ff8c00, #ff0080";
-	{{- if .Site.Params.enableColorBG -}}
-		background: linear-gradient(to right, var(--colorBG)) !important;
-	{{ else }}
-		background-image: var(--bgImage) !important;
-	{{ end }}
-}
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		{{ with $.Site.Params.background.colorBG }}
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		{{ else }}
+			background-image: var(--bgImage) !important;
+		{{ end }}
+	}
 
-body, body.pushable {
-	background-repeat: no-repeat;
-  	background-attachment: fixed;
-  	background-size: cover !important;
-}
-
-.ui.red.label, .ui.red.labels .label {
-    background-color: #a333c8!important;
-    border-color: #a333c8!important;
-    color: #fff!important;
-}
-
-
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
 </style>

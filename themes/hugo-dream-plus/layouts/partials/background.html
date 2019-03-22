@@ -1,52 +1,66 @@
 <script>
 var prevBgIndex = 0;
 var bodyBgSwitchIndex = 0;
-{{- if .Site.Params.enableColorBG -}}
+
+{{ $colorBG := $.Site.Params.background.colorBG }}
+{{ $bgList := $.Site.Params.background.bgList }}
+{{ $bgBlur := $.Site.Params.background.bgBlur }}
+
+{{ with $colorBG }}
 	var gradients = [
-	  ['#726C84', '#908AA1'], // oranges
-	  ['#726C84', '#A79EB6'], // peaches
-	  ['#726C84', '#736E86'], // peaches
-	  ['#726C84', '#5E5A76'] // pinkorange
-	]
-	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]))
-{{- else -}}
-	{{- if .Site.Params.bgList -}}
-		var images = {{- .Site.Params.bgList -}}
-		var randomNumber = getRandomInt(0, images.length)
-		bgImage = "url(" + images[randomNumber] + ")"
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], // Wedding Day Blues
+	  ['#3e5151', '#decba4'], // Sand to Blue
+	  ['#11998e', '#38ef7d'], // Quepal
+	  ['#108dc7', '#ef8e38'], // Pun Yeta
+	  ['#fc5c7d', '#6a82fb'], // Sublime Light
+	  ['#fc466b', '#3f5efb'], // Sublime Vivid
+	  ['#c94b4b', '#4b134f'], // Bighead
+	  ['#23074d', '#cc5333'] // Taran Tado
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+{{ else }}
+	{{ if gt (len $bgList) 1 }}
+		var images = {{ $bgList }};
+		var randomNumber = getRandomInt(0, images.length);
+		bgImage = "url(" + images[randomNumber] + ")";
 	{{ else }}
-		var bgImage = "url(" + {{ .Site.Params.bgImage }} + ")"
+		var bgImage = "url(" + {{ index $bgList 0 }} + ")";
 	{{ end }}
+
 	console.log("Current background: " + bgImage.substring(bgImage.indexOf("bg"), bgImage.length));
-	document.body.style.setProperty('--blurEff', {{- .Site.Params.bgBlur -}});
+	document.body.style.setProperty('--blurEff', {{ $bgBlur }});
 	document.body.style.setProperty('--bgImage', bgImage);
 {{ end }}
+
 	function getRandomInt(min, max) {
-	  min = Math.ceil(min)
-	  max = Math.floor(max)
-	  var random
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
 	  while (1) {
-	    random = Math.floor(Math.random() * (max - min)) + min
+	    random = Math.floor(Math.random() * (max - min)) + min;
 	    if (random !== prevBgIndex) {
-	      prevBgIndex = random
-	      break
+	      prevBgIndex = random;
+	      break;
 	    }
 	  }
-	  return random
+	  return random;
 	}
 
 	function connect(arr) {
-	  var str = ''
+	  var str = '';
 	  for (var i = 0; i < arr.length; i++) {
 	    if (i !== arr.length - 1) {
-	      str += arr[i] + ', '
+	      str += arr[i] + ', ';
 	    } else {
-	      str += arr[i]
+	      str += arr[i];
 	    }
 	  }
-	  return str
+	  return str;
 	}
 </script>
-{{- if not .Site.Params.enableColorBG -}}
-<div class="blur-overlay"></div>
-{{- end -}}
+
+{{/*Create blur effect*/}}
+{{ if not $colorBG }}
+	<div class="blur-overlay"></div>
+{{ end }}
